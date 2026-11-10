@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "selfindex"
+version = "0.1.0"
+description = "Self-evolving retrieval index framework"
+requires-python = ">=3.12"
+dynamic = ["dependencies"]
+
+[project.optional-dependencies]
+dev = ["black==26.5.1", "radon==6.0.1", "pylint==4.0.8", "vulture==2.16"]
+longmem = ["openai-agents==0.22.3", "pillow==12.3.0", "huggingface_hub==1.29.0"]
+browsecomp = [
+    "accelerate==1.14.0",
+    "audioread==3.0.1",
+    "faiss-cpu==1.15.0",
+    "peft==0.20.0",
+    "qwen-omni-utils==0.0.8",
+    "tevatron @ git+https://github.com/texttron/tevatron.git@67eb67604c0e7d1753fefe3b232ddfb84795f5ea",
+    "torchvision==0.28.0",
+]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.package-dir]
+selfindex = "src/selfindex"
+browsecomp = "adapters/browsecomp"
+longmem = "adapters/longmem"
+
+[tool.setuptools.packages.find]
+where = ["src", "adapters"]
+include = ["selfindex*", "browsecomp*", "longmem*"]
+exclude = ["*.runs*", "browsecomp.data*", "*.logs*", "*.indexes*", "*.evals*", "*.results*"]
+
+[tool.pylint.main]
+ignore-paths = ["^externals/"]
+
+[tool.pylint.messages_control]
+disable = ["all"]
+enable = ["E", "F"]
+
+[tool.black]
+required-version = "26.5.1"
+line-length = 88
+target-version = ["py312"]
+skip-magic-trailing-comma = true
+force-exclude = "^/externals/"
+
+[tool.vulture]
+exclude = ["externals/"]
+
+[tool.radon]
+exclude = "*externals/*"

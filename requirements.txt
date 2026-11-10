@@ -1,0 +1,12 @@
+datasets==5.0.1
+gensim==4.4.0
+httpx==0.28.1
+numpy==2.3.5
+openai==3.7.0
+pandas==3.0.5
+pyserini==2.4.0
+scipy==1.18.1
+tiktoken==0.14.0
+torch==2.13.0
+tqdm==4.70.0
+transformers==5.15.0
